@@ -16,7 +16,7 @@ class MarkdownToolbar extends StatefulWidget {
   /// [MarkdownToolbar]. Hover over each field for more details on implementing your own TextField correctly.
   const MarkdownToolbar({
     super.key,
-    required this.useIncludedTextField,
+    this.useIncludedTextField = false,
     this.controller,
     this.focusNode,
     this.collapsable = true,
@@ -33,7 +33,7 @@ class MarkdownToolbar extends StatefulWidget {
     this.runSpacing = 4.0,
     this.alignment = WrapAlignment.end,
     this.boldCharacter = '**',
-    this.italicCharacter = '*',
+    this.italicCharacter = '_',
     this.codeCharacter = '```',
     this.bulletedListCharacter = '-',
     this.horizontalRuleCharacter = '---',
@@ -42,13 +42,13 @@ class MarkdownToolbar extends StatefulWidget {
     this.hideItalic = false,
     this.hideStrikethrough = false,
     this.hideLink = false,
-    this.hideImage = false,
-    this.hideCode = false,
+    this.hideImage = true,
+    this.hideCode = true,
     this.hideBulletedList = false,
     this.hideNumberedList = false,
-    this.hideCheckbox = false,
-    this.hideQuote = false,
-    this.hideHorizontalRule = false,
+    this.hideCheckbox = true,
+    this.hideQuote = true,
+    this.hideHorizontalRule = true,
     this.showTooltips = true,
     this.headingTooltip = 'Heading',
     this.boldTooltip = 'Bold',
@@ -292,8 +292,7 @@ class MarkdownToolbarState extends State<MarkdownToolbar> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: widget.backgroundColor,
                   padding: const EdgeInsets.all(0),
-                  shape:
-                      RoundedRectangleBorder(borderRadius: widget.borderRadius),
+                  shape: RoundedRectangleBorder(borderRadius: widget.borderRadius),
                 ),
                 onPressed: () {},
                 child: Stack(
@@ -302,9 +301,7 @@ class MarkdownToolbarState extends State<MarkdownToolbar> {
                     dropdownString != null
                         ? Text(
                             dropdownString,
-                            style: TextStyle(
-                                color: widget.iconColor,
-                                fontSize: 16.0 * widget.iconSize / 20),
+                            style: TextStyle(color: widget.iconColor, fontSize: 16.0 * widget.iconSize / 20),
                           )
                         : Icon(
                             icon,
@@ -341,8 +338,7 @@ class MarkdownToolbarState extends State<MarkdownToolbar> {
                   backgroundColor: widget.backgroundColor,
                   foregroundColor: widget.iconColor,
                   padding: const EdgeInsets.all(0),
-                  shape:
-                      RoundedRectangleBorder(borderRadius: widget.borderRadius),
+                  shape: RoundedRectangleBorder(borderRadius: widget.borderRadius),
                 ),
                 onPressed: dropdown ? null : onPressed,
                 child: Icon(
@@ -587,57 +583,39 @@ class MarkdownToolbarState extends State<MarkdownToolbar> {
     }
   }
 
-  void onHeadingPressed(int option) => onToolbarItemPressed(
-      option: option, markdownToolbarOption: MarkdownToolbarOption.heading);
+  void onHeadingPressed(int option) => onToolbarItemPressed(option: option, markdownToolbarOption: MarkdownToolbarOption.heading);
 
-  void onBoldPressed() =>
-      onToolbarItemPressed(markdownToolbarOption: MarkdownToolbarOption.bold);
+  void onBoldPressed() => onToolbarItemPressed(markdownToolbarOption: MarkdownToolbarOption.bold);
 
-  void onItalicPressed() =>
-      onToolbarItemPressed(markdownToolbarOption: MarkdownToolbarOption.italic);
+  void onItalicPressed() => onToolbarItemPressed(markdownToolbarOption: MarkdownToolbarOption.italic);
 
-  void onStrikethroughPressed() => onToolbarItemPressed(
-      markdownToolbarOption: MarkdownToolbarOption.strikethrough);
+  void onStrikethroughPressed() => onToolbarItemPressed(markdownToolbarOption: MarkdownToolbarOption.strikethrough);
 
-  void onLinkPressed() =>
-      onToolbarItemPressed(markdownToolbarOption: MarkdownToolbarOption.link);
+  void onLinkPressed() => onToolbarItemPressed(markdownToolbarOption: MarkdownToolbarOption.link);
 
-  void onImagePressed() =>
-      onToolbarItemPressed(markdownToolbarOption: MarkdownToolbarOption.image);
+  void onImagePressed() => onToolbarItemPressed(markdownToolbarOption: MarkdownToolbarOption.image);
 
-  void onCodePressed() =>
-      onToolbarItemPressed(markdownToolbarOption: MarkdownToolbarOption.code);
+  void onCodePressed() => onToolbarItemPressed(markdownToolbarOption: MarkdownToolbarOption.code);
 
-  void onUnorderedListPressed() => onToolbarItemPressed(
-      markdownToolbarOption: MarkdownToolbarOption.unorderedList);
+  void onUnorderedListPressed() => onToolbarItemPressed(markdownToolbarOption: MarkdownToolbarOption.unorderedList);
 
-  void onOrderedListPressed() => onToolbarItemPressed(
-      markdownToolbarOption: MarkdownToolbarOption.orderedList);
+  void onOrderedListPressed() => onToolbarItemPressed(markdownToolbarOption: MarkdownToolbarOption.orderedList);
 
-  void onCheckboxPressed(int option) => onToolbarItemPressed(
-      option: option, markdownToolbarOption: MarkdownToolbarOption.checkbox);
+  void onCheckboxPressed(int option) => onToolbarItemPressed(option: option, markdownToolbarOption: MarkdownToolbarOption.checkbox);
 
-  void onQuotePressed() =>
-      onToolbarItemPressed(markdownToolbarOption: MarkdownToolbarOption.quote);
+  void onQuotePressed() => onToolbarItemPressed(markdownToolbarOption: MarkdownToolbarOption.quote);
 
-  void onHorizontalRulePressed() => onToolbarItemPressed(
-      markdownToolbarOption: MarkdownToolbarOption.horizontalRule);
+  void onHorizontalRulePressed() => onToolbarItemPressed(markdownToolbarOption: MarkdownToolbarOption.horizontalRule);
 
   void onToolbarItemPressed({
     required MarkdownToolbarOption markdownToolbarOption,
     int? option,
   }) {
-    widget.useIncludedTextField
-        ? _includedFocusNode.requestFocus()
-        : widget.focusNode?.requestFocus();
+    widget.useIncludedTextField ? _includedFocusNode.requestFocus() : widget.focusNode?.requestFocus();
     Format.toolbarItemPressed(
       markdownToolbarOption: markdownToolbarOption,
-      controller: widget.useIncludedTextField
-          ? _includedController
-          : widget.controller ?? _includedController,
-      selection: widget.useIncludedTextField
-          ? _includedController.selection
-          : widget.controller?.selection ?? _includedController.selection,
+      controller: widget.useIncludedTextField ? _includedController : widget.controller ?? _includedController,
+      selection: widget.useIncludedTextField ? _includedController.selection : widget.controller?.selection ?? _includedController.selection,
       option: option,
       customBoldCharacter: widget.boldCharacter,
       customItalicCharacter: widget.italicCharacter,
@@ -688,12 +666,8 @@ class MarkdownToolbarState extends State<MarkdownToolbar> {
         if (widget.useIncludedTextField) const SizedBox(height: 4.0),
         if (widget.useIncludedTextField)
           TextField(
-            controller: widget.useIncludedTextField
-                ? _includedController
-                : widget.controller,
-            focusNode: widget.useIncludedTextField
-                ? _includedFocusNode
-                : widget.focusNode,
+            controller: widget.useIncludedTextField ? _includedController : widget.controller,
+            focusNode: widget.useIncludedTextField ? _includedFocusNode : widget.focusNode,
             minLines: 1,
             maxLines: null,
             decoration: const InputDecoration(
