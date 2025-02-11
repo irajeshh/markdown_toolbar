@@ -290,6 +290,7 @@ class MarkdownToolbarState extends State<MarkdownToolbar> {
               height: widget.height,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                  elevation: 0,
                   backgroundColor: widget.backgroundColor,
                   padding: const EdgeInsets.all(0),
                   shape: RoundedRectangleBorder(borderRadius: widget.borderRadius),
@@ -335,6 +336,7 @@ class MarkdownToolbarState extends State<MarkdownToolbar> {
               height: widget.height,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                  elevation: 0,
                   backgroundColor: widget.backgroundColor,
                   foregroundColor: widget.iconColor,
                   padding: const EdgeInsets.all(0),
@@ -357,6 +359,7 @@ class MarkdownToolbarState extends State<MarkdownToolbar> {
       height: widget.height,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
+          elevation: 0,
           backgroundColor: widget.backgroundColor,
           foregroundColor: widget.iconColor,
           padding: const EdgeInsets.all(0),
